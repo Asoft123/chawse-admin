@@ -20,7 +20,7 @@ import {
 } from "../../redux/actions/userActions";
 import { apiEndPoint } from "../../services/api";
 import { setSnackbar } from "../../redux/actions/uiActions";
-import { CircularProgress } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

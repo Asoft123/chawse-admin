@@ -5,3 +5,19 @@
 [1122/132025.216:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
 [1124/100607.695:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
 [1124/100607.725:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\Sir Wisdom\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\607c8d18-0335-496c-91a5-769a7e9a97f3: The system cannot find the path specified. (0x3)
+[1125/152753.755:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1125/215255.611:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1125/215255.637:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1125/215255.606:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1125/215255.620:ERROR:process_reader_win.cc(123)] NtOpenThread: {Access Denied} A process has requested access to an object, but has not been granted those access rights. (0xc0000022)
+[1125/215255.733:ERROR:exception_snapshot_win.cc(99)] thread ID 9564 not found in process
+[1125/215255.733:ERROR:exception_snapshot_win.cc(99)] thread ID 11004 not found in process
+[1125/215255.733:ERROR:exception_snapshot_win.cc(99)] thread ID 7972 not found in process
+[1125/215255.733:ERROR:exception_snapshot_win.cc(99)] thread ID 3888 not found in process
+[1127/194706.246:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1128/023522.601:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1128/135026.043:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1128/160418.351:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1129/122213.690:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1129/141420.557:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)
+[1129/201412.183:ERROR:directory_reader_win.cc(43)] FindFirstFile: The system cannot find the path specified. (0x3)

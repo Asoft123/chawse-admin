@@ -13,11 +13,10 @@ import Paper from "@material-ui/core/Paper";
 import IconButton from "@material-ui/core/IconButton";
 import NumberFormat from "react-number-format";
 import DeleteIcon from "@material-ui/icons/Delete";
-import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { Link } from "react-router-dom";
 import houseImage from "../../images/img.jpeg";
 function createData(name, address, price) {
-  return { name, address, price, houseImage, DeleteIcon, MoreHorizIcon };
+  return { name, address, price, houseImage, DeleteIcon };
 }
 
 const rows = [
@@ -51,7 +50,6 @@ const headCells = [
   { id: "Address", numeric: false, disablePadding: true, label: "Address" },
   { id: "Price", numeric: true, disablePadding: true, label: "Price" },
   { id: "Action", numeric: false, disablePadding: true, label: "Action" },
-  { id: "Action", numeric: false, disablePadding: true, label: "" },
 ];
 
 function EnhancedTableHead() {
@@ -123,7 +121,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Rent() {
+export default function ChawseProperties() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -146,7 +144,11 @@ export default function Rent() {
           id="tableTitle"
           component="div"
         >
-          Properties Open For Rent
+          Chawse Properties Open For Rent
+        </Typography>
+        <Typography variant="body2">
+          These are apartments available for rents and are posted via chawse and
+          agents of chawse
         </Typography>
         <br />
         <TableContainer>
@@ -186,11 +188,6 @@ export default function Rent() {
                       <TableCell align="left">
                         <IconButton color="secondary">
                           {<DeleteIcon />}
-                        </IconButton>
-                      </TableCell>
-                      <TableCell align="left">
-                        <IconButton color="primary">
-                          {<MoreHorizIcon />}
                         </IconButton>
                       </TableCell>
                     </TableRow>

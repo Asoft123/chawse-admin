@@ -26,41 +26,54 @@ function Dashboard() {
     <div className={classes.root}>
       <Container>
         <Grid container spacing={2}>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <Card>
               <CardHeader avatar={<MonetizationOnIcon />}></CardHeader>
               <CardContent>
-                <Typography align="left" variant="h6" color="primary">
+                <Typography align="left" variant="body1" color="primary">
                   Houses for Rent
                 </Typography>
-                <Typography variant="body2" align="left">
+                <Typography variant="h6" align="left">
                   44,000
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <Card>
               <CardHeader avatar={<ReceiptIcon />}></CardHeader>
               <CardContent>
-                <Typography align="left" variant="h6" color="primary">
+                <Typography align="left" variant="body1" color="primary">
                   Houses for Sale
                 </Typography>
-                <Typography variant="body2" align="left">
+                <Typography variant="h6" align="left">
                   44,000
                 </Typography>
               </CardContent>
             </Card>
           </Grid>
-          <Grid item xs={12} sm={4}>
+          <Grid item xs={12} sm={3}>
             <Card>
               <CardHeader avatar={<PeopleAltIcon />}></CardHeader>
               <CardContent>
-                <Typography align="left" variant="h6" color="primary">
+                <Typography align="left" variant="body1" color="primary">
                   Users
                 </Typography>
-                <Typography variant="body2" align="left">
+                <Typography variant="h6" align="left">
                   44,000
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            <Card>
+              <CardHeader avatar={<PeopleAltIcon />}></CardHeader>
+              <CardContent>
+                <Typography align="left" variant="body1" color="primary">
+                  Landlords
+                </Typography>
+                <Typography variant="h6" align="left">
+                  4,000
                 </Typography>
               </CardContent>
             </Card>
