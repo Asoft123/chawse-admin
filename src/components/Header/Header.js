@@ -13,14 +13,25 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
 import Menu from "@material-ui/core/Menu";
+import List from "@material-ui/core/List";
+import Collapse from "@material-ui/core/Collapse";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import { FaHome, FaUsers, FaWarehouse } from "react-icons/fa";
-import { IoIosCash } from "react-icons/io";
-import { Link } from "react-router-dom";
+import {
+  FaAtlas,
+  FaHome,
+  FaMoneyBillWave,
+  FaPeopleCarry,
+  FaUsers,
+  FaWarehouse,
+} from "react-icons/fa";
+import { IoIosAddCircle, IoIosCash } from "react-icons/io";
+import { NavLink, useHistory } from "react-router-dom";
 
-const drawerWidth = 240;
+const drawerWidth = 230;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -66,9 +77,9 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: "hidden",
-    width: theme.spacing(7) + 1,
+    width: theme.spacing(0),
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1,
+      width: theme.spacing(0),
     },
   },
   toolbar: {
@@ -79,11 +90,43 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   active: {
-    backgroundImage: "linear-gradient(45deg, #d10a11, #d10a11, #b30a10)",
-    backgroundColor: "#d10a11",
+    backgroundImage: "linear-gradient(45deg, #0068c2, #0068c2, #234b63)",
+    backgroundColor: "#0068c2",
     boxShadow:
       "4px 4px 10px 0 rgba(0,0,0,.1),4px 4px 15px -5px rgba(21,114,232,.4)",
     color: "#ffffff",
+  },
+  linkIconStyle: {
+    fontSize: "16px",
+    color: "#aac6d8",
+  },
+  listItemStyle: {
+    // marginTop: "8px",
+    paddingLeft: theme.spacing(1),
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  nested: {
+    paddingLeft: theme.spacing(2),
+    background: "#dbdada",
+    marginBottom: theme.spacing(1),
+  },
+  nestedLink: {
+    fontSize: "12px",
+    paddingLeft: theme.spacing(6),
+  },
+  linkStyle: {
+    // color: "#aaaaaa",
+    display: "block",
+    textDecoration: "none",
+    textDecorationStyle: "none",
+
+    "&::hover": {
+      textDecoration: "none",
+      color: "#eee",
+    },
   },
   content: {
     flexGrow: 1,
@@ -95,16 +138,25 @@ export default function MiniDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
+  const [collapseOpen, setCollapseOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  const [active, setActive] = useState("Dashboard");
+  const [active, setActive] = useState("");
 
+  const history = useHistory();
   const handleDrawerOpen = () => {
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+  const handleCloseColapse = () => {
+    setCollapseOpen(!collapseOpen);
+  };
+  const handleProfileRoute = () => {
+    handleClose();
+    history.push("/myprofile");
   };
 
   const handleMenu = (event) => {
@@ -117,10 +169,6 @@ export default function MiniDrawer(props) {
     setMenuOpen(false);
   };
 
-  const linkStyle = {
-    color: "#aaaaaa",
-    textDecoration: "none",
-  };
   return (
     <div className={classes.root}>
       <AppBar
@@ -177,8 +225,8 @@ export default function MiniDrawer(props) {
               open={menuOpen}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem onClick={handleProfileRoute}>Profile</MenuItem>
+              <MenuItem onClick={handleClose}>Logout</MenuItem>
             </Menu>
           </div>
         </Toolbar>
@@ -206,64 +254,160 @@ export default function MiniDrawer(props) {
           </IconButton>
         </div>
         <Divider />
-        <Link onClick={() => setActive("Dashboard")} to="/" style={linkStyle}>
-          <ListItem
-            button
-            key="Dashoard"
-            style={{ marginTop: "16px" }}
-            className={active === "Dashboard" ? classes.active : ""}
-          >
+        <NavLink
+          to="/"
+          exact
+          className={classes.linkStyle}
+          activeClassName={classes.active}
+          onClick={() => setActive("dashboard")}
+        >
+          <ListItem button key="Dashoard" className={classes.listItemStyle}>
             <ListItemIcon>
-              <FaHome style={{ fontSize: "16px" }} />
+              <FaHome
+                className={active === "dashboard" ? classes.linkIconStyle : ""}
+              />
             </ListItemIcon>
             <ListItemText primary="Dashboard" />
           </ListItem>
-        </Link>
-
+        </NavLink>
         <Divider />
-        <Link onClick={() => setActive("Rent")} to="/rent" style={linkStyle}>
-          <ListItem
-            button
-            key="Rent"
-            style={{ marginTop: "16px" }}
-            className={active === "Rent" ? classes.active : ""}
-          >
+        <ListItem
+          button
+          onClick={handleCloseColapse}
+          className={classes.listItemStyle}
+        >
+          <ListItemIcon>
+            <FaMoneyBillWave className={classes.linkIconStyle} />
+          </ListItemIcon>
+          <ListItemText primary="Finance" />
+          {collapseOpen ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={collapseOpen} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button className={classes.nested}>
+              <ListItemText
+                primary="New Record"
+                className={classes.nestedLink}
+              />
+            </ListItem>
+            <ListItem button className={classes.nested}>
+              <ListItemText
+                primary="See Records"
+                className={classes.nestedLink}
+              />
+            </ListItem>
+          </List>
+        </Collapse>
+        <Divider />
+        <NavLink
+          to="/rent"
+          exact
+          className={classes.linkStyle}
+          activeClassName={classes.active}
+          onClick={() => setActive("rent")}
+        >
+          <ListItem button key="Rent" className={classes.listItemStyle}>
             <ListItemIcon>
-              <FaWarehouse style={{ fontSize: "16px" }} />
+              <FaWarehouse
+                className={active === "rent" ? classes.linkIconStyle : ""}
+              />
             </ListItemIcon>
             <ListItemText primary="Rent" />
           </ListItem>
-        </Link>
+        </NavLink>
 
         <Divider />
-        <Link onClick={() => setActive("Sale")} to="/sale" style={linkStyle}>
-          <ListItem
-            button
-            key="Sale"
-            style={{ marginTop: "16px" }}
-            className={active === "Sale" ? classes.active : ""}
-          >
+        <NavLink
+          to="sale"
+          exact
+          className={classes.linkStyle}
+          activeClassName={classes.active}
+          onClick={() => setActive("sale")}
+        >
+          <ListItem button key="Sale" className={classes.listItemStyle}>
             <ListItemIcon>
-              <IoIosCash style={{ fontSize: "16px" }} />
+              <IoIosCash
+                className={active === "sale" ? classes.linkIconStyle : ""}
+              />
             </ListItemIcon>
             <ListItemText primary="Sale" />
           </ListItem>
-        </Link>
+        </NavLink>
 
         <Divider />
-        <Link onClick={() => setActive("Users")} to="/users" style={linkStyle}>
-          <ListItem
-            button
-            key="User"
-            style={{ marginTop: "16px" }}
-            className={active === "Users" ? classes.active : ""}
-          >
+        <NavLink
+          exact
+          to="/users"
+          className={classes.linkStyle}
+          activeClassName={classes.active}
+          onClick={() => setActive("users")}
+        >
+          <ListItem button key="User" className={classes.listItemStyle}>
             <ListItemIcon>
-              <FaUsers style={{ fontSize: "16px" }} />
+              <FaUsers
+                className={active === "users" ? classes.linkIconStyle : " "}
+              />
             </ListItemIcon>
             <ListItemText primary="Users" />
           </ListItem>
-        </Link>
+        </NavLink>
+        <Divider />
+        <NavLink
+          to="/landlords"
+          exact
+          className={classes.linkStyle}
+          activeClassName={classes.active}
+          onClick={() => setActive("landlords")}
+        >
+          <ListItem button key="landlords" className={classes.listItemStyle}>
+            <ListItemIcon>
+              <FaPeopleCarry
+                className={active === "landlords" ? classes.linkIconStyle : ""}
+              />
+            </ListItemIcon>
+            <ListItemText primary="View LandLords" />
+          </ListItem>
+        </NavLink>
+        <Divider />
+        <NavLink
+          to="/chawseproperties"
+          exact
+          className={classes.linkStyle}
+          activeClassName={classes.active}
+          onClick={() => setActive("chawseproperties")}
+        >
+          <ListItem
+            button
+            key="chawseproperties"
+            className={classes.listItemStyle}
+          >
+            <ListItemIcon>
+              <FaAtlas
+                className={active === "landlords" ? classes.linkIconStyle : ""}
+              />
+            </ListItemIcon>
+            <ListItemText primary="CHawse Properties" />
+          </ListItem>
+        </NavLink>
+        <Divider />
+        <NavLink
+          exact
+          to="/addproperty"
+          className={classes.linkStyle}
+          activeClassName={classes.active}
+          onClick={() => setActive("addproperty")}
+        >
+          <ListItem button key="Add Property" className={classes.listItemStyle}>
+            <ListItemIcon>
+              <IoIosAddCircle
+                className={
+                  active === "addproperty" ? classes.linkIconStyle : ""
+                }
+              />
+            </ListItemIcon>
+            <ListItemText primary="Add Property" />
+          </ListItem>
+        </NavLink>
       </Drawer>
       {props.children}
     </div>
