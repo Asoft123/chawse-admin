@@ -67,7 +67,7 @@ export default function SignUp() {
     dispatch(signingInUser());
     setTimeout(() => {
       axios
-        .post(`${apiEndPoint}/admin/adminRegister`, data)
+        .post(`${apiEndPoint}/admins/adminRegister`, data)
         .then((res) => {
           if (res.status === 200) {
             dispatch(setSnackbar(finishSigningInUser()));
