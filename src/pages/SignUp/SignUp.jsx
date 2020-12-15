@@ -46,11 +46,13 @@ const initialValues = {
   firstName: "",
   lastName: "",
   email: "",
+  phone: "",
   password: "",
 };
 let SignUpSchema = yup.object().shape({
   firstName: yup.string().max(50).required("First Name is required"),
   lastName: yup.string().max(50).required("Last Name is required"),
+  phone: yup.number().required("Phone number is required"),
   email: yup
     .string()
     .email("Enter a valid email")
@@ -67,10 +69,10 @@ export default function SignUp() {
     dispatch(signingInUser());
     setTimeout(() => {
       axios
-        .post(`${apiEndPoint}/admins/adminRegister`, data)
+        .post(`${apiEndPoint}/users/`, data)
         .then((res) => {
           if (res.status === 200) {
-            dispatch(setSnackbar(finishSigningInUser()));
+            dispatch(finishSigningInUser());
             dispatch(setSnackbar("Registration Successfull", "success"));
             history.replace("/login");
           }
@@ -78,7 +80,7 @@ export default function SignUp() {
         .catch((err) => {
           console.log(err);
           if (err.response && err.response.data) {
-            dispatch(setSnackbar(finishSigningInUser()));
+            dispatch(finishSigningInUser());
             dispatch(setSnackbar(err.response.data.msg, "error"));
           }
         });
@@ -135,7 +137,23 @@ export default function SignUp() {
                     onBlur={handleBlur}
                   />
                 </Grid>
-                <Grid item xs={12}>
+                <Grid item xs={12} md={6}>
+                  <TextField
+                    error={errors.phone && touched.phone}
+                    helperText={errors.phone}
+                    variant="outlined"
+                    required
+                    fullWidth
+                    type="number"
+                    id="phone"
+                    label="Phone Number"
+                    name="phone"
+                    autoComplete="phone"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                  />
+                </Grid>{" "}
+                <Grid item xs={12} md={6}>
                   <TextField
                     error={errors.email && touched.email}
                     helperText={errors.email}
