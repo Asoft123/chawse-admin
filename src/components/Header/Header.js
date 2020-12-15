@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
   nested: {
     paddingLeft: theme.spacing(2),
     background: "#dbdada",
-    marginBottom: theme.spacing(1),
+    marginBottom: theme.spacing(0.1),
   },
   nestedLink: {
     fontSize: "12px",
@@ -159,6 +159,10 @@ export default function MiniDrawer(props) {
     history.push("/myprofile");
   };
 
+  const handleRouteChange = (url) => {
+    setCollapseOpen(!collapseOpen);
+    history.push(`/${url}`);
+  };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
     setMenuOpen(true);
@@ -284,13 +288,21 @@ export default function MiniDrawer(props) {
         </ListItem>
         <Collapse in={collapseOpen} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
+            <ListItem
+              onClick={() => handleRouteChange("newrecord")}
+              button
+              className={classes.nested}
+            >
               <ListItemText
                 primary="New Record"
                 className={classes.nestedLink}
               />
             </ListItem>
-            <ListItem button className={classes.nested}>
+            <ListItem
+              onClick={() => handleRouteChange("allrecords")}
+              button
+              className={classes.nested}
+            >
               <ListItemText
                 primary="See Records"
                 className={classes.nestedLink}

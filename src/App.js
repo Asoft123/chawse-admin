@@ -15,6 +15,8 @@ import AddProperty from "./pages/AddProperty/AddProperty";
 import ChawseProperties from "./pages/ChawseProperties/ChawseProperties";
 import MyProfile from "./pages/MyProfile/MyProfile";
 import CustomizedSnackbars from "./components/Snackbar/Snackbar";
+import NewRecord from "./pages/NewRecord/NewRecord";
+import AllCategories from "./pages/AllCategories/AllCategories";
 
 function App() {
   return (
@@ -26,11 +28,13 @@ function App() {
           <Route exact path="/signup" component={SignUp} />
           <Route exact path="/login" component={Login} />
           <Header exact>
+            <Route exact path="/newrecord" component={NewRecord} />
             <Route
               exact
               path="/chawseproperties"
               component={ChawseProperties}
             />
+            <Route exact path="/allcategories" component={AllCategories} />
             <Route exact path="/myprofile" component={MyProfile} />
             <Route exact path="/addproperty" component={AddProperty} />
             <Route exact path="/landlords" component={LandLords} />{" "}

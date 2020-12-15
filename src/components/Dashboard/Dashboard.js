@@ -3,6 +3,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import Button from "@material-ui/core/Button";
 import CardHeader from "@material-ui/core/CardHeader";
 import Typography from "@material-ui/core/Typography";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -12,6 +13,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import RecentUsers from "../RecentUsers/RecentUsers";
 import RecentSaleProperties from "../RecentSaleProperties/RecentSaleProperties";
 import RecentRentProperties from "../RecentRentProperties/RecentRentProperties";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,8 +21,13 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     paddingTop: theme.spacing(3),
   },
+  categoryTextStyle: {
+    flexGrow: 1,
+  },
 }));
 function Dashboard() {
+  const history = useHistory();
+
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -80,6 +87,22 @@ function Dashboard() {
           </Grid>
         </Grid>
         <br />
+        <Card>
+          <CardContent>
+            <Typography display="inline" className={classes.categoryTextStyle}>
+              Total number of categories of apartment present 44 &nbsp;{" "}
+            </Typography>{" "}
+            <Button
+              size="small"
+              variant="contained"
+              onClick={() => {
+                history.push("/allcategories");
+              }}
+            >
+              View
+            </Button>
+          </CardContent>
+        </Card>
         <RecentUsers />
         <br />
         <RecentSaleProperties />
