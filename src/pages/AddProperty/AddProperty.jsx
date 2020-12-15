@@ -68,7 +68,7 @@ class AddProperty extends React.Component {
     const formData = new FormData();
 
     for (let i = 0; i < this.state.files.length; i++) {
-      formData.append("images", this.state.files[i]);
+      formData.append("image_urls", this.state.files[i]);
     }
 
     formData.append("address", values.address);
@@ -77,10 +77,10 @@ class AddProperty extends React.Component {
     formData.append("propertyType", values.propertyType);
     formData.append("condition", values.condition);
     values.size && formData.append("size", values.size);
-    formData.append("totalNumberOfRooms", values.totalNumberOfRooms);
+    formData.append("num_rooms", values.num_rooms);
     formData.append("numberOfBedrooms", values.numberOfBedrooms);
     formData.append("numberOfToilets", values.numberOfToilets);
-    formData.append("numberOf ", values.numberOf);
+    formData.append("numberOfBathrooms ", values.numberOfBathrooms);
     formData.append("isFurnished", values.isFurnished);
     formData.append("hasParkingSpace", values.hasParkingSpace);
     formData.append("state", values.state);
@@ -88,9 +88,11 @@ class AddProperty extends React.Component {
     formData.append("isHouseFenced", values.isHouseFenced);
     formData.append("isDiningAvailable", values.isDiningAvailable);
     formData.append("isElectricityAvailable", values.isElectricityAvailable);
-    formData.append("isWaterAvailable", values.isWaterAvailable);
-    formData.append("accessToRoad", values.accessToRoad);
+    formData.append("water", values.water);
+    formData.append("road", values.road);
     formData.append("description", values.description);
+    formData.append("buildingtype", values.buildingtype);
+    formData.append("uploadedBy", values.uploadedBy);
   };
 
   render() {
@@ -99,9 +101,10 @@ class AddProperty extends React.Component {
       town: "",
       price: "",
       propertyType: "",
+      intent: "",
       condition: "",
       size: "",
-      totalNumberOfRooms: "",
+      num_rooms: "",
       numberOfBedrooms: "",
       numberOfBathrooms: "",
       numberOfToilets: "",
@@ -112,8 +115,8 @@ class AddProperty extends React.Component {
       state: "",
       lga: "",
       isHouseFenced: "",
-      isWaterAvailable: "",
-      accessToRoad: "",
+      water: "",
+      road: "",
       description: "",
     };
 
@@ -127,24 +130,25 @@ class AddProperty extends React.Component {
       price: Yup.number().required(
         "Please, Enter an amount for this apartment"
       ),
+      intent: Yup.string().required("Please select a value"),
       propertyType: Yup.string().required(
         "Please, Select a type for this apartment"
       ),
       condition: Yup.string(),
-      size: Yup.number(),
-      totalNumberOfRooms: Yup.number().required("This is a required field"),
-      numberOfBedrooms: Yup.number().required("This is a required field"),
-      numberOfBathrooms: Yup.number().required("This is a required field"),
-      numberOfToilets: Yup.number().required("This is a required field"),
-      isFurnished: Yup.string().required("This is a required field"),
-      isDiningAvailable: Yup.string().required("This is a required field"),
-      isElectricityAvailable: Yup.string().required("This is a required field"),
+      size: Yup.string(),
+      num_rooms: Yup.number().required("This is a required field"),
+      numberOfBedrooms: Yup.number(),
+      numberOfBathrooms: Yup.number(),
+      numberOfToilets: Yup.number(),
+      isFurnished: Yup.string(),
+      isDiningAvailable: Yup.string(),
+      isElectricityAvailable: Yup.string(),
       hasParkingSpace: Yup.string().required("This is a required field"),
       state: Yup.string().required("Select a state"),
       lga: Yup.string().required("Select a local government area"),
-      isHouseFenced: Yup.string().required("This is a required field"),
-      isWaterAvailable: Yup.string().required("This is a required field"),
-      accessToRoad: Yup.string().required("This is a required field"),
+      isHouseFenced: Yup.string(),
+      water: Yup.string().required("This is a required field"),
+      road: Yup.string().required("This is a required field"),
       description: Yup.string().max(5000),
     });
 
@@ -408,17 +412,14 @@ class AddProperty extends React.Component {
                       </Grid>
                       <Grid item xs={12} sm={6}>
                         <TextField
-                          error={
-                            errors.totalNumberOfRooms &&
-                            touched.totalNumberOfRooms
-                          }
-                          helperText={errors.totalNumberOfRooms}
-                          name="totalNumberOfRooms"
+                          error={errors.num_rooms && touched.num_rooms}
+                          helperText={errors.num_rooms}
+                          name="num_rooms"
                           variant="outlined"
                           type="number"
                           required
                           fullWidth
-                          id="totalNumberOfRooms"
+                          id="num_rooms"
                           label="Total Number of Rooms"
                           onChange={handleChange}
                           onBlur={handleBlur}
@@ -482,7 +483,6 @@ class AddProperty extends React.Component {
                           helperText={errors.size}
                           name="size"
                           variant="outlined"
-                          type="number"
                           required
                           fullWidth
                           id="size"
@@ -671,17 +671,14 @@ class AddProperty extends React.Component {
                           <FormControl
                             component="fieldset"
                             required
-                            error={
-                              errors.isWaterAvailable &&
-                              touched.isWaterAvailable
-                            }
+                            error={errors.water && touched.water}
                           >
                             <FormLabel component="legend" align="left">
                               Is water available?
                             </FormLabel>
                             <RadioGroup
                               aria-label="Is water available?"
-                              name="isWaterAvailable"
+                              name="water"
                               onChange={handleChange}
                             >
                               <FormControlLabel
@@ -703,14 +700,14 @@ class AddProperty extends React.Component {
                           <FormControl
                             component="fieldset"
                             required
-                            error={errors.accessToRoad && touched.accessToRoad}
+                            error={errors.road && touched.road}
                           >
                             <FormLabel component="legend" align="left">
                               Is it accessible to road?
                             </FormLabel>
                             <RadioGroup
                               aria-label="Is it accessible to road?"
-                              name="accessToRoad"
+                              name="road"
                               onChange={handleChange}
                             >
                               <FormControlLabel
