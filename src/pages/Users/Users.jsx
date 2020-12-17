@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
@@ -11,26 +11,30 @@ import TableRow from "@material-ui/core/TableRow";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
 
-function createData(firstName, lastName, phone, email) {
-  return { firstName, lastName, phone, email };
-}
+import { getUsers }  from '../../services/userService'
 
-const rows = [
-  createData("John", "Emeka", "08101234567", "johnemaka@gmail.com"),
-  createData("Champ", "Rhanda", "08101234567", "rhanda@gmail.com"),
-  createData("John", "Bela", "08101234567", "bela@gmail.com"),
-  createData("Champlan", "Peena", "08101234567", "peena@gmail.com"),
-  createData("Peter", "Bart", "08101234567", "peterbart@gmail.com"),
-  createData("John", "Luis", "08101234567", "johnluis@gmail.com"),
-  createData("Kelvin", "Shaw", "08101234567", "shaw@gmail.com"),
-  createData("Leonard", "Amanda", "08101234567", "amanda@gmail.com"),
-  createData("James", "Loisa", "08101234567", "james@gmail.com"),
-  createData("Spader", "Emeka", "08101234567", "spader@gmail.com"),
-  createData("Bina", "Raymond", "08101234567", "ramond@gmail.com"),
-  createData("Leonard", "Elizabeth", "08101234567", "elizabeth@gmail.com"),
-  createData("James", "Favour", "08101234567", "favour@gmail.com"),
-  createData("Prosper", "Menna", "08101234567", "menna@gmail.com"),
-];
+// function createData(firstName, lastName, phone, email) {
+//   return { firstName, lastName, phone, email };
+// }
+
+
+
+// const rows = [
+  // createData("John", "Emeka", "08101234567", "johnemaka@gmail.com"),
+  // createData("Champ", "Rhanda", "08101234567", "rhanda@gmail.com"),
+  // createData("John", "Bela", "08101234567", "bela@gmail.com"),
+  // createData("Champlan", "Peena", "08101234567", "peena@gmail.com"),
+  // createData("Peter", "Bart", "08101234567", "peterbart@gmail.com"),
+  // createData("John", "Luis", "08101234567", "johnluis@gmail.com"),
+  // createData("Kelvin", "Shaw", "08101234567", "shaw@gmail.com"),
+  // createData("Leonard", "Amanda", "08101234567", "amanda@gmail.com"),
+  // createData("James", "Loisa", "08101234567", "james@gmail.com"),
+  // createData("Spader", "Emeka", "08101234567", "spader@gmail.com"),
+  // createData("Bina", "Raymond", "08101234567", "ramond@gmail.com"),
+  // createData("Leonard", "Elizabeth", "08101234567", "elizabeth@gmail.com"),
+  // createData("James", "Favour", "08101234567", "favour@gmail.com"),
+  // createData("Prosper", "Menna", "08101234567", "menna@gmail.com"),
+// ];
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -142,6 +146,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Users() {
+  const [users, setUsers] = useState([]);
+  
+  async function fetchUsers(){
+    try{
+      const users = await getUsers();
+      console.log(users)
+      setUsers(users.data.user)
+    }catch(err){
+      console.log(err)
+    }
+   
+  }
+  useEffect(() => {
+    fetchUsers()
+    }, [])
+    
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
   const [orderBy, setOrderBy] = React.useState("calories");
@@ -214,10 +234,10 @@ export default function Users() {
               order={order}
               orderBy={orderBy}
               onRequestSort={handleRequestSort}
-              rowCount={rows.length}
+              rowCount={users.length}
             />
             <TableBody>
-              {stableSort(rows, getComparator(order, orderBy))
+              {stableSort(users, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.name);
@@ -228,7 +248,7 @@ export default function Users() {
                       hover
                       onClick={(event) => handleClick(event, row.name)}
                       tabIndex={-1}
-                      key={`${row.firstName}-${row.lastName}`}
+                      key={`${row.firstname}-${row.lastname}`}
                       selected={isItemSelected}
                     >
                       <TableCell
@@ -237,9 +257,9 @@ export default function Users() {
                         scope="row"
                         padding="none"
                       >
-                        {row.firstName}
+                        {row.firstname}
                       </TableCell>
-                      <TableCell align="left">{row.lastName}</TableCell>
+                      <TableCell align="left">{row.lastname}</TableCell>
                       <TableCell align="left">{row.phone}</TableCell>
                       <TableCell align="left">{row.email}</TableCell>
                     </TableRow>
@@ -248,15 +268,15 @@ export default function Users() {
             </TableBody>
           </Table>
         </TableContainer>
-        <TablePagination
+       {users && <TablePagination
           rowsPerPageOptions={[5]}
           component="div"
-          count={rows.length}
+          count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
           onChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        />} 
       </Paper>
     </div>
   );
